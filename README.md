@@ -1,20 +1,22 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# AegisThreat AI — Enterprise Threat Triage & DFIR Platform
 
-# Run and deploy your AI Studio app
+AegisThreat AI is an advanced, full-stack threat intelligence, log parsing, and MITRE ATT&CK mapping platform engineered for SOC Analysts, Blue Teams, and DFIR professionals.
 
-This contains everything you need to run your app locally.
+## 🛡️ Core Capabilities
+- **Multi-Format Log Parser**: Ingests Windows Event Logs, Suricata EVE JSON, AWS CloudTrail, and Syslog.
+- **Automated Threat Intelligence**: Extracts IPs, C2 domains, hashes (MD5/SHA256), CVEs, and registry paths.
+- **MITRE ATT&CK Enterprise Mapping**: Maps findings directly to ATT&CK Tactics & Techniques.
+- **AI Rule Studio**: Synthesizes ready-to-use Sigma YAML rules, YARA signatures, and Suricata NIDS rules.
 
-View your app in AI Studio: https://ai.studio/apps/5a2e2a01-6e8a-40ce-a3ff-c3a362cdb3c8
+## 🚀 Local Setup & Installation
 
-## Run Locally
+```bash
+# 1. Clone repository
+git clone [https://github.com/ShubhamMan15/soc-sentinel-ai.git](https://github.com/ShubhamMan15/soc-sentinel-ai.git)
+cd soc-sentinel-ai
 
-**Prerequisites:**  Node.js
+# 2. Install dependencies
+npm install
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+# 3. Launch Development Server
+npm run dev
