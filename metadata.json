@@ -1,5 +1,5 @@
 {
-  "name": "SOC Sentinel AI",
+  "name": "AegisThreat AI",
   "description": "AI-Powered Threat Intelligence Triage, Log Parser, MITRE ATT&CK Mapping & Rule Generator Platform for Blue Team & SOC Engineers",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

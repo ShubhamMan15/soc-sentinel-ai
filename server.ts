@@ -12,17 +12,14 @@ const PORT = 3000;
 
 app.use(express.json({ limit: '10mb' }));
 
-// Initialize Gemini Client server-side safely
-let ai: GoogleGenAI | null = null;
-if (process.env.GEMINI_API_KEY) {
-  ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
-    httpOptions: {
-      headers: {
-        'User-Agent': 'aistudio-build',
-      },
-    },
-  });
+// Initialize Gemini Client server-side dynamically
+function getGeminiClient(): GoogleGenAI | null {
+  if (process.env.GEMINI_API_KEY) {
+    return new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY,
+    });
+  }
+  return null;
 }
 
 // Helper: Regex IOC Extractor
@@ -131,7 +128,7 @@ function generateFallbackRules(alert: AlertItem): RuleOutput {
 id: ${Math.random().toString(36).substring(2, 10)}-${Date.now()}
 status: experimental
 description: Auto-generated Sigma detection rule for ${alert.title}. MITRE Techniques: ${alert.mitreMappings.map(m => m.techniqueId).join(', ') || 'T1059'}.
-author: SOC Sentinel AI Copilot
+author: AegisThreat AI Copilot
 date: ${new Date().toISOString().split('T')[0]}
 references:
   - Internal Incident ID: ${alert.id}
@@ -147,12 +144,12 @@ falsepositives:
 level: ${alert.severity === 'CRITICAL' ? 'critical' : alert.severity === 'HIGH' ? 'high' : 'medium'}
 tags:
   - attack.${alert.mitreMappings[0]?.tacticName.toLowerCase().replace(/ /g, '_') || 'execution'}
-  - attack.${alert.mitreMappings[0]?.techniqueId.toLowerCase() || 't1059'}`;
+  - attack.${alert.mitreMappings[0]?.techniqueId.toLowerCase() || 't1003'}`;
 
-  const yara = `rule SOC_Sentinel_Detect_${alert.title.replace(/[^a-zA-Z0-9_]/g, '_')} {
+  const yara = `rule AegisThreat_Detect_${alert.title.replace(/[^a-zA-Z0-9_]/g, '_')} {
     meta:
-        description = "YARA memory/file signature generated for ${alert.title}"
-        author = "SOC Sentinel AI Copilot"
+        description = "YARA memory signature generated for ${alert.title}"
+        author = "AegisThreat AI Copilot"
         date = "${new Date().toISOString().split('T')[0]}"
         severity = "${alert.severity}"
         threat_actor = "${alert.threatActor || 'APT / Unknown'}"
@@ -164,7 +161,7 @@ tags:
         $hex_pattern at 0 and ($s1 or $s2)
 }`;
 
-  const suricata = `alert tcp $HOME_NET any -> $EXTERNAL_NET [80,443] (msg:"SOC-SENTINEL Threat Alert - ${alert.title}"; content:"${primaryDomain ? primaryDomain.value : primaryIoc ? primaryIoc.value : 'POST'}"; classtype:trojan-activity; sid:9000${Math.floor(Math.random() * 89999 + 10000)}; rev:1; metadata:created_at ${new Date().toISOString().split('T')[0]}, mitre_technique_id ${alert.mitreMappings[0]?.techniqueId || 'T1071'};)`;
+  const suricata = `alert tcp $HOME_NET any -> $EXTERNAL_NET [80,443] (msg:"AEGISTHREAT Alert - ${alert.title}"; content:"${primaryDomain ? primaryDomain.value : primaryIoc ? primaryIoc.value : 'POST'}"; classtype:trojan-activity; sid:9000${Math.floor(Math.random() * 89999 + 10000)}; rev:1; metadata:created_at ${new Date().toISOString().split('T')[0]}, mitre_technique_id ${alert.mitreMappings[0]?.techniqueId || 'T1071'};)`;
 
   const playbook = `### Incident Response Containment Playbook: ${alert.title}
 
@@ -193,11 +190,12 @@ tags:
 
 // Health Check API
 app.get('/api/health', (req, res) => {
+  const geminiAvailable = !!process.env.GEMINI_API_KEY;
   res.json({
     status: 'ok',
     timestamp: new Date().toISOString(),
-    geminiActive: !!process.env.GEMINI_API_KEY,
-    version: '1.0.0-SOC-SENTINEL'
+    geminiActive: geminiAvailable,
+    version: '2.0.0-AEGESTHREAT-AI'
   });
 });
 
@@ -215,10 +213,11 @@ app.post('/api/analyze-log', async (req, res) => {
 
     let aiAnalysisResult: any = null;
 
-    // Step 2: Use Gemini API if client initialized
-    if (ai) {
+    // Step 2: Use Gemini API if available
+    const aiClient = getGeminiClient();
+    if (aiClient) {
       try {
-        const prompt = `You are a Lead SOC Analyst & DFIR Threat Intelligence Expert.
+        const prompt = `You are AegisThreat AI, a Lead SOC Analyst & DFIR Threat Intelligence Expert.
 Analyze the following security log and output a structured JSON report.
 
 Log Type: ${logType}
@@ -258,8 +257,8 @@ Return a JSON object matching this exact schema:
   ]
 }`;
 
-        const geminiResponse = await ai.models.generateContent({
-          model: 'gemini-3.6-flash',
+        const geminiResponse = await aiClient.models.generateContent({
+          model: 'gemini-2.5-flash',
           contents: prompt,
           config: {
             responseMimeType: 'application/json',
@@ -364,9 +363,10 @@ app.post('/api/generate-rules', async (req, res) => {
       return res.status(400).json({ error: 'alertData object is required' });
     }
 
-    if (ai) {
+    const aiClient = getGeminiClient();
+    if (aiClient) {
       try {
-        const prompt = `You are a Principal Cyber Detection Engineer & Rules Architect.
+        const prompt = `You are AegisThreat AI, a Principal Cyber Detection Engineer & Rules Architect.
 Generate production-ready detection signatures for the following incident context:
 
 Title: ${alertData.title}
@@ -384,8 +384,8 @@ Return JSON matching:
   "irPlaybook": "Complete Markdown Incident Response Playbook"
 }`;
 
-        const geminiRes = await ai.models.generateContent({
-          model: 'gemini-3.6-flash',
+        const geminiRes = await aiClient.models.generateContent({
+          model: 'gemini-2.5-flash',
           contents: prompt,
           config: {
             responseMimeType: 'application/json',
@@ -446,7 +446,7 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[SOC Sentinel AI] Server running on http://0.0.0.0:${PORT}`);
+    console.log(`[AegisThreat AI] Server running on http://0.0.0.0:${PORT}`);
   });
 }
 

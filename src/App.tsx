@@ -228,9 +228,9 @@ tags:
       <footer className="border-t border-slate-900 bg-slate-950 py-4 text-center text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center space-x-2">
-            <span className="font-bold text-slate-400">SOC Sentinel AI</span>
+            <span className="font-bold text-slate-300">AegisThreat AI</span>
             <span>•</span>
-            <span>Threat Intelligence & Incident Response Copilot</span>
+            <span>Cyber Threat Intelligence & Incident Response Copilot</span>
           </div>
           <div className="text-slate-500 font-mono text-[11px]">
             Ready for Kali Linux & GitHub Portfolio

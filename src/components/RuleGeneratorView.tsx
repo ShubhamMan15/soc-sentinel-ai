@@ -20,7 +20,7 @@ export const RuleGeneratorView: React.FC<RuleGeneratorViewProps> = ({ initialAle
 id: ${Math.random().toString(36).substring(2, 10)}
 status: experimental
 description: Detects obfuscated powershell execution attempting Kerberoasting via Ticket Granting Service (TGS) requests.
-author: SOC Sentinel AI Copilot
+author: AegisThreat AI Copilot
 date: ${new Date().toISOString().split('T')[0]}
 logsource:
   category: process_creation

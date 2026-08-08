@@ -33,7 +33,7 @@ export const PortfolioGuideView: React.FC = () => {
     setTimeout(() => setCopiedSection(null), 2000);
   };
 
-  const directoryTreeText = `soc-sentinel-ai/
+  const directoryTreeText = `aegisthreat-ai/
 ├── .env.example               # Environment variables template
 ├── metadata.json              # Platform app metadata & permissions
 ├── package.json               # Node.js dependencies & scripts
@@ -57,9 +57,9 @@ export const PortfolioGuideView: React.FC = () => {
         └── PortfolioGuideView.tsx # Deployment & Resume portfolio guide`;
 
   const kaliCommandsText = `# Step 1: Extract project archive on Kali Linux
-mkdir -p ~/projects/soc-sentinel-ai
-cd ~/projects/soc-sentinel-ai
-unzip ~/Downloads/soc-sentinel-ai.zip -d .
+mkdir -p ~/projects/aegisthreat-ai
+cd ~/projects/aegisthreat-ai
+unzip ~/Downloads/aegisthreat-ai.zip -d .
 
 # Step 2: Install dependencies & run development server
 npm install
@@ -68,20 +68,20 @@ npm run dev
 # Step 3: Initialize Git repository & create initial commit
 git init
 git add .
-git commit -m "feat: initial commit of SOC Sentinel AI Threat Triage Platform"
+git commit -m "feat: initial commit of AegisThreat AI Platform"
 
 # Step 4: Link to your GitHub repository and push
 git branch -M main
-git remote add origin https://github.com/YOUR_GITHUB_USERNAME/soc-sentinel-ai.git
+git remote add origin https://github.com/YOUR_GITHUB_USERNAME/aegisthreat-ai.git
 git push -u origin main`;
 
-  const generatedReadmeText = `# 🛡️ SOC Sentinel AI: Cyber Threat Intelligence Triage & Detection Rule Platform
+  const generatedReadmeText = `# 🛡️ AegisThreat AI: Cyber Threat Intelligence Triage & Detection Rule Platform
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Stack: Full-Stack React + Express](https://img.shields.io/badge/Stack-React%20%7C%20Express%20%7C%20TypeScript-cyan)](https://github.com)
-[![AI Integration: Gemini API](https://img.shields.io/badge/AI-Google%20Gemini%203.6%20Flash-emerald)](https://ai.google.dev)
+[![AI Integration: Gemini API](https://img.shields.io/badge/AI-Google%20Gemini%202.5%20Flash-emerald)](https://ai.google.dev)
 
-**SOC Sentinel AI** is an enterprise-grade threat intelligence triage, log parsing, and automated detection rule generation platform engineered for **Blue Teams**, **SOC Analysts**, and **DFIR Professionals**.
+**AegisThreat AI** is an enterprise-grade threat intelligence triage, log parsing, and automated detection rule generation platform engineered for **Blue Teams**, **SOC Analysts**, and **DFIR Professionals**.
 
 ---
 
@@ -90,7 +90,7 @@ git push -u origin main`;
 - 🔍 **Multi-Format Security Log Parser**: Parses Windows Event Logs (XML/EVTX), Suricata/Zeek EVE JSON, AWS CloudTrail, Linux \`auth.log\`, Nginx access logs, and Syslog.
 - 🎯 **Automated IOC Extraction**: Extracts IPv4s, C2 domains, SHA256 hashes, CVEs, file paths, and registry artifacts via regex & threat intelligence enrichment.
 - 📊 **MITRE ATT&CK Enterprise Mapping**: Maps detected event indicators directly to ATT&CK Tactics (TA0002, TA0006, TA0011) and Techniques (T1003, T1059, T1071).
-- ⚡ **AI Incident Copilot**: Powered by Google Gemini 3.6 Flash for automated risk scoring (0-100), executive summaries, and 3-step incident containment playbooks.
+- ⚡ **AI Incident Copilot**: Powered by Google Gemini 2.5 Flash for automated risk scoring (0-100), executive summaries, and 3-step incident containment playbooks.
 - 🛠️ **Detection Signature Generator**: Auto-generates **Sigma YAML** rules, **YARA** memory malware signatures, and **Suricata NIDS** signatures.
 - 📋 **Live SIEM Alert Queue**: Track alert triage statuses (\`NEW\`, \`INVESTIGATING\`, \`CONTAINMENT\`, \`RESOLVED\`), document analyst notes, and export SIEM JSON data.
 
@@ -100,7 +100,7 @@ git push -u origin main`;
 
 \`\`\`text
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                           SOC SENTINEL FRONTEND                         │
+│                          AEGISTHREAT AI FRONTEND                        │
 │   (React + Vite + Tailwind CSS + Recharts + Lucide Icons)               │
 └────────────────────────────────────┬────────────────────────────────────┘
                                      │ HTTP / REST API
